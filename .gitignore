@@ -251,6 +251,9 @@ project.lock.json
 *.feature.xlsx.*
 *.Specs_*.html
 
+/webApi2/packages/*
+
+
 #####
 # End of core ignore list, below put you custom 'per project' settings (patterns or path)
 #####
