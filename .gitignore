@@ -8,6 +8,7 @@
 
 # dependencies
 /node_modules
+/webApi2/packages
 
 # IDEs and editors
 /.idea
