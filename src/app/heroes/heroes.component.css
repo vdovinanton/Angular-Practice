@@ -42,11 +42,22 @@
     background-color: #607D8B;
     line-height: 1em;
     position: relative;
-    left: -1px;
+    /*left: -1px;*/
+    right: 65px;
     top: -4px;
     height: 1.8em;
     min-width: 16px;
     text-align: right;
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
+  }
+
+  .heroes .delete {
+    position: absolute;
+    right: 7px;
+    top: 6px;
+  }
+
+  .heroes .table {
+
   }

@@ -8,6 +8,11 @@ import { MessageService } from '../app/message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
+
+interface IAppStore {
+
+}
+
 @Injectable()
 export class HeroService {
 
@@ -15,22 +20,23 @@ export class HeroService {
   private heroesUrl = `${this.server}api/heroes`;  // URL to web api
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }) //application/x-www-form-urlencoded application/json
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
+  
+
   constructor(private messageService: MessageService,
-    private http: HttpClient) {  }
+              private http: HttpClient) {  }
 
   getMock(): Observable<Hero[]> {
-    const url = 'http://localhost:55352/api/heroes';
-    return this.http.get<Hero[]>(url).pipe(
+    return this.http.get<Hero[]>(this.heroesUrl).pipe(
       tap(_ => this.log(`got mock`)),
       catchError(this.handleError<Hero[]>(`getMock `, []))
     );
   }
 
   getHeros(): Observable<Hero[]> {
-    this.messageService.add('HeroService: fetched heroes');
+    this.messageService.add('HeroService: fetched heroes'); 
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
       catchError(this.handleError<Hero[]>(`getHeroes `, []))
     );
@@ -44,9 +50,20 @@ export class HeroService {
     );
   }
 
+  /* GET heroes whose name contains search term */
+  searchHeroes(term: string): Observable<Hero[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<Hero[]>(`${this.heroesUrl}/search/${term}`).pipe(
+      tap(_ => this.log(`found heroes matching "${term}"`)),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
+  }
+
   /** DELETE: delete the hero from the server */ 
-  deleteHero(hero: Hero | number): Observable<Hero> {
-    const id = typeof hero === 'number' ? hero : hero.Id;
+  deleteHero(id: number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`;
 
     return this.http.delete<Hero>(url, this.httpOptions).pipe(

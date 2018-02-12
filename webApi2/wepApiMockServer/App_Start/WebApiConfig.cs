@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -48,7 +48,15 @@ namespace wepApiMockServer
                 new Hero { Id = 20, Name = "Tornado" }
             };
 
-        public IList<Hero> Data => _list;
+        public IList<Hero> Data
+        {
+          get { return _list; }
+          set
+            {
+              _list.Clear();
+              _list = value;
+            }
+        }
         public void Add(Hero hero) => _list.Add(hero);
     }
 }

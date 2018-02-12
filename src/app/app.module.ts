@@ -15,6 +15,9 @@ import { HeroService } from './hero.service';
 import { InMemoryDataService } from './in-memory-data.service';
 import { MessageService } from './message.service'
 
+import { StoreModule } from '@ngrx/store';
+import { simpleReducer } from './simple-reducer';
+import { HeroSearchComponent } from './hero-search/hero-search.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,8 @@ import { MessageService } from './message.service'
     HeroesComponent,
     HeroDetailComponent,
     MessagesComponent,
-    DashboardComponent
+    DashboardComponent,
+    HeroSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,8 @@ import { MessageService } from './message.service'
     AppRoutingModule,
     HttpClientInMemoryWebApiModule,
     HttpClientModule,
+
+    StoreModule.forRoot({ message: simpleReducer })
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
